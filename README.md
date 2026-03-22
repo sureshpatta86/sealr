@@ -140,13 +140,15 @@ Detailed docs are in the `docs/` directory:
 
 ## Language Support
 
-| Phase | Language | Status |
-|-------|----------|--------|
-| 1 | C# / .NET Core | Active |
-| 2 | Node.js / TypeScript | Planned |
-| 3 | Java / Spring | Planned |
-| 4 | Go | Planned |
-| 5 | Python / Django | Planned |
+All core scanners (dependencies, secrets, SAST, malware, config, license) are language-agnostic. SAST rules are available for the following languages with more being added:
+
+| Language | SAST Rules | Dependency Scanning | AI Auto-Fix |
+|----------|-----------|-------------------|-------------|
+| C# / .NET Core | Yes | Yes | Yes |
+| TypeScript / Node.js | Yes | Yes | Yes |
+| Python | Yes | Yes | Yes |
+| Java / Spring | Planned | Yes | Yes |
+| Go | Planned | Yes | Yes |
 
 ## License
 
