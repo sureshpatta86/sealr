@@ -1,0 +1,34 @@
+rules:
+  - id: csharp-weak-crypto-md5
+    pattern: MD5.Create()
+    message: "MD5 is not collision-resistant. Use SHA256 instead."
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: crypto
+      cwe: "CWE-328"
+      auto_fixable: true
+
+  - id: csharp-weak-crypto-sha1
+    pattern: SHA1.Create()
+    message: "SHA1 is deprecated. Use SHA256 instead."
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: crypto
+      cwe: "CWE-328"
+      auto_fixable: true
+
+  - id: csharp-weak-crypto-des
+    patterns:
+      - pattern-either:
+          - pattern: DES.Create()
+          - pattern: RC2.Create()
+          - pattern: TripleDES.Create()
+    message: "Legacy cipher detected. Use Aes with GCM mode instead."
+    severity: ERROR
+    languages: [csharp]
+    metadata:
+      category: crypto
+      cwe: "CWE-327"
+      auto_fixable: true

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sealr
+  labels:
+    app.kubernetes.io/name: sealr
+    app.kubernetes.io/part-of: sealr

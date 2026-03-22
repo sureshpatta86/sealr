@@ -1,0 +1,34 @@
+rules:
+  - id: py-pickle-load
+    patterns:
+      - pattern-either:
+          - pattern: pickle.load(...)
+          - pattern: pickle.loads(...)
+    message: "pickle.load with untrusted data enables arbitrary code execution — use json or a safe serialization format"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: deserialization
+      cwe: "CWE-502"
+      auto_fixable: true
+      fix_strategy: "Replace with json.load or a safe alternative"
+
+  - id: py-pickle-unpickle
+    pattern: pickle.Unpickler(...)
+    message: "Unpickler with untrusted data enables arbitrary code execution"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: deserialization
+      cwe: "CWE-502"
+      auto_fixable: false
+
+  - id: py-shelve-open
+    pattern: shelve.open(...)
+    message: "shelve uses pickle internally — avoid with untrusted data"
+    severity: WARNING
+    languages: [python]
+    metadata:
+      category: deserialization
+      cwe: "CWE-502"
+      auto_fixable: false

@@ -1,0 +1,12 @@
+rules:
+  - id: csharp-allow-anonymous-controller
+    pattern: |
+      [AllowAnonymous]
+      public class $CONTROLLER : Controller { ... }
+    message: "Entire controller marked [AllowAnonymous]. Verify this is intentional."
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: auth_misconfig
+      cwe: "CWE-862"
+      auto_fixable: false

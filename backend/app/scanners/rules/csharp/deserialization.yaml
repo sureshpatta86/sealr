@@ -1,0 +1,20 @@
+rules:
+  - id: csharp-binary-formatter
+    pattern: new BinaryFormatter()
+    message: "BinaryFormatter is dangerous and allows remote code execution. Use System.Text.Json instead."
+    severity: ERROR
+    languages: [csharp]
+    metadata:
+      category: deserialization
+      cwe: "CWE-502"
+      auto_fixable: true
+
+  - id: csharp-typenamehandling-all
+    pattern: TypeNameHandling.All
+    message: "TypeNameHandling.All enables deserialization attacks. Use TypeNameHandling.None."
+    severity: ERROR
+    languages: [csharp]
+    metadata:
+      category: deserialization
+      cwe: "CWE-502"
+      auto_fixable: true

@@ -1,0 +1,16 @@
+rules:
+  - id: csharp-missing-antiforgery
+    patterns:
+      - pattern: |
+          [HttpPost]
+          public $RET $METHOD(...) { ... }
+      - pattern-not: |
+          [ValidateAntiForgeryToken]
+          ...
+    message: "POST action missing [ValidateAntiForgeryToken] attribute, vulnerable to CSRF."
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: csrf
+      cwe: "CWE-352"
+      auto_fixable: true

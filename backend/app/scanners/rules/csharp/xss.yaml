@@ -1,0 +1,10 @@
+rules:
+  - id: csharp-xss-html-raw
+    pattern: Html.Raw($INPUT)
+    message: "Html.Raw outputs unencoded HTML, risking XSS. Use HtmlEncoder.Default.Encode() or @Html.Encode()."
+    severity: ERROR
+    languages: [csharp]
+    metadata:
+      category: xss
+      cwe: "CWE-79"
+      auto_fixable: true

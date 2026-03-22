@@ -1,0 +1,33 @@
+rules:
+  - id: ts-sql-injection-template-literal
+    pattern: $DB.query(`...${...}...`)
+    message: "SQL injection via template literal interpolation in database query"
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries"
+
+  - id: ts-sql-injection-string-concat
+    patterns:
+      - pattern: $DB.query($QUERY + ...)
+    message: "SQL injection via string concatenation in database query"
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries"
+
+  - id: ts-nosql-injection-mongo
+    pattern: $COLLECTION.find({$KEY: $INPUT, ...})
+    message: "Potential NoSQL injection — validate and sanitize user input before MongoDB queries"
+    severity: WARNING
+    languages: [typescript, javascript]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-943"
+      auto_fixable: false

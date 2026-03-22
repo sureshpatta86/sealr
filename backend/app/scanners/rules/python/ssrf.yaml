@@ -1,0 +1,33 @@
+rules:
+  - id: py-ssrf-requests
+    pattern: requests.get($URL, ...)
+    message: "Verify URL is validated against an allowlist before making HTTP requests to prevent SSRF"
+    severity: WARNING
+    languages: [python]
+    metadata:
+      category: ssrf
+      cwe: "CWE-918"
+      auto_fixable: false
+
+  - id: py-ssrf-urllib
+    patterns:
+      - pattern-either:
+          - pattern: urllib.request.urlopen($URL, ...)
+          - pattern: urllib.request.urlretrieve($URL, ...)
+    message: "Verify URL is validated before making HTTP requests to prevent SSRF"
+    severity: WARNING
+    languages: [python]
+    metadata:
+      category: ssrf
+      cwe: "CWE-918"
+      auto_fixable: false
+
+  - id: py-ssrf-httpx
+    pattern: httpx.get($URL, ...)
+    message: "Verify URL is validated against an allowlist before making HTTP requests to prevent SSRF"
+    severity: WARNING
+    languages: [python]
+    metadata:
+      category: ssrf
+      cwe: "CWE-918"
+      auto_fixable: false

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sealr-celery
+  namespace: sealr
+  labels:
+    app: sealr-celery
+spec:
+  serviceName: sealr-celery
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sealr-celery
+  template:
+    metadata:
+      labels:
+        app: sealr-celery
+    spec:
+      containers:
+        - name: worker
+          image: sealr-backend:latest
+          command:
+            - celery
+            - -A
+            - app.workers.celery_app
+            - worker
+            - --loglevel=info
+            - --concurrency=4
+          envFrom:
+            - configMapRef:
+                name: sealr-config
+            - secretRef:
+                name: sealr-secrets
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: "2"
+              memory: 2Gi
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket

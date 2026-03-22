@@ -1,0 +1,36 @@
+rules:
+  - id: csharp-sql-injection-string-concat
+    patterns:
+      - pattern: new SqlCommand($CMD, ...)
+      - metavariable-regex:
+          metavariable: $CMD
+          regex: '.*\+.*'
+    message: "SQL injection via string concatenation in SqlCommand"
+    severity: ERROR
+    languages: [csharp]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries"
+
+  - id: csharp-sql-injection-fromrawsql
+    pattern: .FromSqlRaw($QUERY, ...)
+    message: "Use FromSqlInterpolated instead of FromSqlRaw to prevent SQL injection"
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "FromSqlInterpolated"
+
+  - id: csharp-sql-injection-dapper
+    pattern: connection.Query($SQL, ...)
+    message: "Verify Dapper query uses parameterized SQL, not string concatenation"
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: false

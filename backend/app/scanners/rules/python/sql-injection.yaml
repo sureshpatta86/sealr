@@ -1,0 +1,34 @@
+rules:
+  - id: py-sql-injection-fstring
+    pattern: cursor.execute(f"...{...}...")
+    message: "SQL injection via f-string interpolation — use parameterized queries"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries with placeholders"
+
+  - id: py-sql-injection-format
+    pattern: cursor.execute("...".format(...))
+    message: "SQL injection via str.format() — use parameterized queries"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries with placeholders"
+
+  - id: py-sql-injection-percent
+    patterns:
+      - pattern: cursor.execute($QUERY % ...)
+    message: "SQL injection via %-formatting — use parameterized queries"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: sql_injection
+      cwe: "CWE-89"
+      auto_fixable: true
+      fix_strategy: "Parameterized queries with placeholders"

@@ -1,0 +1,10 @@
+"""WebSocket event constants."""
+
+SCAN_STARTED = "scan.started"
+SCAN_PROGRESS = "scan.progress"
+SCAN_VULNERABILITY_FOUND = "scan.vulnerability.found"
+SCAN_FIX_GENERATED = "scan.fix.generated"
+SCAN_FIX_VALIDATED = "scan.fix.validated"
+SCAN_PR_CREATED = "scan.pr.created"
+SCAN_COMPLETED = "scan.completed"
+SCAN_FAILED = "scan.failed"

@@ -1,0 +1,45 @@
+title = "Sealr Gitleaks Config — .NET Extended Patterns"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "dotnet-connection-string"
+description = "Detects connection strings with embedded passwords"
+regex = '''(?i)(connection\s*string|connectionstring|Data Source).*(?:password|pwd)\s*=\s*[^\s;]+'''
+tags = ["dotnet", "connection-string", "secret"]
+
+[[rules]]
+id = "dotnet-appsettings-secret"
+description = "Detects secrets in appsettings.json keys"
+regex = '''(?i)"(ApiKey|Secret|Password|ConnectionString|PrivateKey|Token)"\s*:\s*"[^"]{8,}"'''
+path = '''(?i)appsettings.*\.json'''
+tags = ["dotnet", "config", "secret"]
+
+[[rules]]
+id = "azure-storage-key"
+description = "Detects Azure Storage account keys"
+regex = '''(?i)AccountKey\s*=\s*[A-Za-z0-9+/=]{44,}'''
+tags = ["azure", "storage", "secret"]
+
+[[rules]]
+id = "azure-service-bus"
+description = "Detects Azure Service Bus connection strings"
+regex = '''(?i)Endpoint=sb://[^;]+;SharedAccessKeyName=[^;]+;SharedAccessKey=[A-Za-z0-9+/=]+'''
+tags = ["azure", "service-bus", "secret"]
+
+[[rules]]
+id = "nuget-api-key"
+description = "Detects NuGet API keys"
+regex = '''(?i)nuget[_\s]*(?:api[_\s]*)?key\s*[=:]\s*["']?[a-z0-9]{32,}'''
+tags = ["dotnet", "nuget", "secret"]
+
+[allowlist]
+paths = [
+  '''(^|/)\.git/''',
+  '''node_modules/''',
+  '''(^|/)bin/''',
+  '''(^|/)obj/''',
+  '''\.min\.js$''',
+  '''package-lock\.json$''',
+]

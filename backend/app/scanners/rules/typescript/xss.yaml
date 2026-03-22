@@ -1,0 +1,32 @@
+rules:
+  - id: ts-react-dangerous-innerhtml
+    pattern: <$EL dangerouslySetInnerHTML={...} />
+    message: "dangerouslySetInnerHTML can lead to XSS — sanitize input with DOMPurify or similar"
+    severity: WARNING
+    languages: [typescript, javascript]
+    metadata:
+      category: xss
+      cwe: "CWE-79"
+      auto_fixable: true
+      fix_strategy: "Sanitize with DOMPurify"
+
+  - id: ts-express-unsanitized-response
+    pattern: res.send($INPUT)
+    message: "Verify that user input is sanitized before sending in response to prevent XSS"
+    severity: WARNING
+    languages: [typescript, javascript]
+    metadata:
+      category: xss
+      cwe: "CWE-79"
+      auto_fixable: false
+
+  - id: ts-innerhtml-assignment
+    pattern: $EL.innerHTML = $INPUT
+    message: "Direct innerHTML assignment can lead to XSS — use textContent or sanitize input"
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      category: xss
+      cwe: "CWE-79"
+      auto_fixable: true
+      fix_strategy: "Use textContent instead"

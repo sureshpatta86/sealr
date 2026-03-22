@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sealr-backend
+  namespace: sealr
+  labels:
+    app: sealr-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sealr-backend
+  template:
+    metadata:
+      labels:
+        app: sealr-backend
+    spec:
+      containers:
+        - name: backend
+          image: sealr-backend:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: sealr-config
+            - secretRef:
+                name: sealr-secrets
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: sealr
+spec:
+  selector:
+    app: sealr-backend
+  ports:
+    - port: 8000
+      targetPort: 8000

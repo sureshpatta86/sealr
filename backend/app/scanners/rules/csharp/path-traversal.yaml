@@ -1,0 +1,10 @@
+rules:
+  - id: csharp-path-traversal
+    pattern: Path.Combine($BASE, $USER_INPUT)
+    message: "Path.Combine with user input may allow path traversal. Validate and sanitize the input."
+    severity: WARNING
+    languages: [csharp]
+    metadata:
+      category: path_traversal
+      cwe: "CWE-22"
+      auto_fixable: false

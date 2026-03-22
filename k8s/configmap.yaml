@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sealr-config
+  namespace: sealr
+data:
+  REDIS_URL: "redis://redis-service:6379/0"
+  FRONTEND_URL: "https://sealr.example.com"
+  S3_ENDPOINT: "http://minio-service:9000"
+  S3_BUCKET: "sealr-reports"
+  OPENAI_THINKING_MODEL: "gpt-5.4-thinking"
+  ANTHROPIC_MODEL: "claude-opus-4-6"

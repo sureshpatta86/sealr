@@ -1,0 +1,22 @@
+rules:
+  - id: ts-redos-nested-quantifier
+    patterns:
+      - pattern-regex: 'new RegExp\(["\'].*(\+|\*)\).*(\+|\*)\)'
+    message: "Regex with nested quantifiers may be vulnerable to ReDoS — use a safe regex library or simplify the pattern"
+    severity: WARNING
+    languages: [typescript, javascript]
+    metadata:
+      category: other
+      cwe: "CWE-1333"
+      auto_fixable: false
+
+  - id: ts-redos-user-input-regex
+    pattern: new RegExp($INPUT)
+    message: "Creating regex from user input can lead to ReDoS — validate or sanitize input before regex compilation"
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      category: other
+      cwe: "CWE-1333"
+      auto_fixable: true
+      fix_strategy: "Use a regex sanitization library or escape special characters"

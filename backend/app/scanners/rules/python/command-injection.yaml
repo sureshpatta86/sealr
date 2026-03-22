@@ -1,0 +1,43 @@
+rules:
+  - id: py-command-injection-os-system
+    pattern: os.system($CMD)
+    message: "os.system() is vulnerable to command injection — use subprocess.run() with shell=False"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: injection
+      cwe: "CWE-78"
+      auto_fixable: true
+      fix_strategy: "Replace with subprocess.run(args, shell=False)"
+
+  - id: py-command-injection-subprocess-shell
+    pattern: subprocess.call($CMD, shell=True, ...)
+    message: "subprocess with shell=True is vulnerable to command injection"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: injection
+      cwe: "CWE-78"
+      auto_fixable: true
+      fix_strategy: "Use shell=False with argument list"
+
+  - id: py-command-injection-subprocess-run-shell
+    pattern: subprocess.run($CMD, shell=True, ...)
+    message: "subprocess.run with shell=True is vulnerable to command injection"
+    severity: WARNING
+    languages: [python]
+    metadata:
+      category: injection
+      cwe: "CWE-78"
+      auto_fixable: true
+      fix_strategy: "Use shell=False with argument list"
+
+  - id: py-eval-injection
+    pattern: eval($INPUT)
+    message: "eval() with user input enables arbitrary code execution"
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: injection
+      cwe: "CWE-95"
+      auto_fixable: false
